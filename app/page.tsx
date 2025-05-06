@@ -8,7 +8,7 @@ export default function Home() {
           Ashutosh chess academy
         </h1>
       </div>
-      <button className="px-6 py-2 bg-[#ffffff] rounded-lg text-xl text-white font-normal border border-[#000000]/30 border-b-4 hover:border-b-2 text-black">Get Started</button>
+      <button className="px-6 py-2 bg-[#ffffff] rounded-lg text-xl font-normal border border-[#000000]/30 border-b-4 hover:border-b-2 text-black">Get Started</button>
     </div>
   );
 }
