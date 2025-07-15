@@ -3,7 +3,7 @@ import { FaChessKnight, FaChessBishop, FaChessRook } from "react-icons/fa";
 
 export const tiers: IPricing[] = [
     {
-        name: 'Knight',
+        name: 'Beginner',
         icon: FaChessKnight({ size: 26 }) as JSX.Element,
         price: 5000,
         features: [
@@ -13,7 +13,7 @@ export const tiers: IPricing[] = [
         ],
     },
     {
-        name: 'Bishop',
+        name: 'Intermediate',
         icon: FaChessBishop({ size: 26 }) as JSX.Element,
         price: 7500,
         features: [
@@ -23,7 +23,7 @@ export const tiers: IPricing[] = [
         ],
     },
     {
-        name: 'Rook',
+        name: 'Advanced',
         icon: FaChessRook({ size: 26 }) as JSX.Element,
         price: 10000,
         features: [
