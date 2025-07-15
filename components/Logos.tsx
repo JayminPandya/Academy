@@ -8,8 +8,8 @@ const Logos: React.FC = () => {
                 {/* India */}
                 <span className="fi fi-in text-6xl"></span>
 
-                {/* South Africa */}
-                <span className="fi fi-za text-6xl"></span>
+                {/* Uganda */}
+                <span className="fi fi-ug text-6xl"></span>
 
                 {/* USA */}
                 <span className="fi fi-us text-6xl"></span>
