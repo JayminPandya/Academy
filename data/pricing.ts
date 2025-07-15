@@ -1,8 +1,10 @@
 import { IPricing } from "@/types";
+import { FaChessKnight, FaChessBishop, FaChessRook } from "react-icons/fa";
 
 export const tiers: IPricing[] = [
     {
-        name: 'Beginner',
+        name: 'Knight',
+        icon: FaChessKnight({ size: 26 }) as JSX.Element,
         price: 5000,
         features: [
             '20 Hours coaching',
@@ -11,7 +13,8 @@ export const tiers: IPricing[] = [
         ],
     },
     {
-        name: 'Intermediate',
+        name: 'Bishop',
+        icon: FaChessBishop({ size: 26 }) as JSX.Element,
         price: 7500,
         features: [
             '20 Hours coaching',
@@ -20,7 +23,8 @@ export const tiers: IPricing[] = [
         ],
     },
     {
-        name: 'Advanced',
+        name: 'Rook',
+        icon: FaChessRook({ size: 26 }) as JSX.Element,
         price: 10000,
         features: [
             '20 Hours coaching',
