@@ -32,12 +32,12 @@ export const benefits: IBenefit[] = [
             {
                 title: "Start from Zero",
                 description: "No prior knowledge needed - learn every piece, rule, and move from the ground up.",
-                icon: <FiDollarSign size={26} />
+                icon: <FiUser size={26} />
             },
             {
                 title: "Practice by Playing",
                 description: "Engage with fun puzzles and real-game scenarios tailored for absolute beginners.",
-                icon: <FiBriefcase size={26} />
+                icon: <FiTarget size={26} />
             },
             {
                 title: "Real - Time Insights",
