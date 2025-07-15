@@ -18,6 +18,7 @@ export interface IBenefitBullet {
 
 export interface IPricing {
     name: string;
+    icon: JSX.Element;
     price: number | string;
     features: string[];
 }
