@@ -11,7 +11,7 @@ interface Props {
 }
 
 const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
-    const { name, price, features } = tier;
+    const { name, icon, price, features } = tier;
 
     const handleWhatsAppRedirect = () => {
         const phoneNumber = "917016745669"; // Use international format without + or spaces
@@ -23,7 +23,7 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
     return (
         <div className={clsx("w-full max-w-sm mx-auto bg-white rounded-xl border border-gray-200 lg:max-w-full", { "shadow-lg": highlight })}>
             <div className="p-6 border-b border-gray-200 rounded-t-xl">
-                <h3 className="text-2xl font-semibold mb-4">{name}</h3>
+                <h3 className="text-2xl font-semibold mb-4">{icon}</h3>
                 <p className="text-3xl md:text-5xl font-bold mb-6">
                     <span className={clsx({ "text-secondary": highlight })}>
                         {typeof price === 'number' ? `₹${price}` : price}
