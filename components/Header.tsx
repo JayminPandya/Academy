@@ -16,13 +16,11 @@ const Header: React.FC = () => {
         setIsOpen(!isOpen);
     };
 
-    const pricingLink = menuItems.find(item => item.text.toLowerCase() === 'pricing')?.url || '#pricing';
-
     return (
         <header className="bg-transparent fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
             <Container className="!px-0">
                 <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10">
-                    {/* Logo */}
+                    {/* Logo with Knight Icon */}
                     <Link href="/" className="flex items-center gap-2">
                         <FaChessKnight className="text-primary" size={32} />
                     </Link>
@@ -69,7 +67,7 @@ const Header: React.FC = () => {
                 </nav>
             </Container>
 
-            {/* Mobile Menu with Transition */}
+            {/* Mobile Menu Drawer */}
             <Transition
                 show={isOpen}
                 enter="transition ease-out duration-200"
@@ -83,32 +81,34 @@ const Header: React.FC = () => {
                     id="mobile-menu" 
                     className="md:hidden fixed inset-0 bg-white z-40 overflow-y-auto"
                 >
-                    {/* Header with Close button and Title - now properly aligned */}
-                    <div className="sticky top-0 bg-white z-10 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                        <h2 className="text-3xl font-bold text-foreground">Ashutosh Chess <br /> Academy</h2>
+                    {/* Header with Knight Icon and Close Button */}
+                    <div className="sticky top-0 bg-white z-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                        <FaChessKnight className="text-primary" size={36} />
                         <button
                             onClick={toggleMenu}
-                            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors focus:outline-none"
+                            aria-label="Close menu"
                         >
                             <HiOutlineXMark className="h-6 w-6 text-gray-700" />
                         </button>
                     </div>
 
-                    <div className="flex flex-col px-6 py-6">
-                        <ul className="flex flex-col space-y-6">
+                    {/* Menu Items */}
+                    <div className="px-6 py-6">
+                        <ul className="flex flex-col space-y-5">
                             {menuItems.map((item, index) => (
                                 <li key={item.text}>
                                     <Link
                                         href={item.url}
                                         onClick={toggleMenu}
-                                        className="text-xl text-foreground hover:text-primary flex items-center gap-4 py-2"
+                                        className="text-xl text-foreground hover:text-primary flex items-center gap-4 py-3"
                                     >
-                                        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-medium">
+                                        <span className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700 font-medium">
                                             {index + 1}
                                         </span>
-                                        <span>{item.text}</span>
+                                        <span className="flex-grow">{item.text}</span>
                                         {item.text.toLowerCase() === 'tournaments' && (
-                                            <span className="text-xs font-bold bg-red-600 text-white px-2 py-1 rounded-full ml-auto">
+                                            <span className="text-xs font-bold bg-red-600 text-white px-2 py-1 rounded-full">
                                                 NEW
                                             </span>
                                         )}
@@ -117,10 +117,11 @@ const Header: React.FC = () => {
                             ))}
                         </ul>
                         
-                        <div className="mt-8 mb-8">
+                        {/* Join Now Button */}
+                        <div className="mt-10">
                             <Link 
                                 href="/#pricing" 
-                                className="block text-center text-lg text-black bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors"
+                                className="block w-full text-center text-lg text-black bg-primary hover:bg-primary-accent px-8 py-4 rounded-full transition-colors font-medium"
                                 onClick={toggleMenu}
                             >
                                 Join Now
