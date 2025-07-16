@@ -28,14 +28,19 @@ const Header: React.FC = () => {
                     {/* Desktop Menu */}
                     <ul className="hidden md:flex space-x-6">
                         {menuItems.map(item => (
-                            <li key={item.text}>
-                                <Link href={item.url} className="text-foreground hover:text-foreground-accent transition-colors">
+                            <li key={item.text} className="relative">
+                                <Link href={item.url} className="text-foreground hover:text-foreground-accent transition-colors flex items-center gap-1">
                                     {item.text}
+                                    {item.text.toLowerCase() === 'tournaments' && (
+                                        <span className="text-[10px] font-bold bg-red-600 text-white px-2 py-0.5 rounded-full ml-1">
+                                            NEW
+                                        </span>
+                                    )}
                                 </Link>
                             </li>
                         ))}
                         <li>
-                            <Link href="https://wa.me/917016745669?text=Hi%2C%20I%20am%20interested%20in%20joining%20your%20Chess%20Academy!" target='_blank' className="text-black bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors">
+                            <Link href="/#pricing" className="text-black bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors">
                                 Join Now
                             </Link>
                         </li>
@@ -75,16 +80,20 @@ const Header: React.FC = () => {
                     <ul className="flex flex-col space-y-4 pt-1 pb-6 px-6">
                         {menuItems.map(item => (
                             <li key={item.text}>
-                                <Link href={item.url} className="text-foreground hover:text-primary block" onClick={toggleMenu}>
-                                    {item.text}
+                                <Link
+                                    href={item.url}
+                                    onClick={toggleMenu}
+                                    className="text-foreground hover:text-primary flex items-center gap-2"
+                                >
+                                    <span>{item.text}</span>
+                                    {item.text.toLowerCase() === 'tournaments' && (
+                                        <span className="text-[10px] font-bold bg-red-600 text-white px-2 py-0.5 rounded-full">
+                                            NEW
+                                        </span>
+                                    )}
                                 </Link>
                             </li>
                         ))}
-                        <li>
-                            <Link href="#cta" className="text-black bg-primary hover:bg-primary-accent px-5 py-2 rounded-full block w-fit" onClick={toggleMenu}>
-                                Get Started
-                            </Link>
-                        </li>
                     </ul>
                 </div>
             </Transition>
