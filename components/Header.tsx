@@ -22,7 +22,7 @@ const Header: React.FC = () => {
         <header className="bg-transparent fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
             <Container className="!px-0">
                 <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10">
-                    {/* Logo - Now using FaChessKnight icon */}
+                    {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
                         <FaChessKnight className="text-primary" size={32} />
                     </Link>
@@ -83,19 +83,15 @@ const Header: React.FC = () => {
                     id="mobile-menu" 
                     className="md:hidden fixed inset-0 bg-white z-40 overflow-y-auto"
                 >
-                    {/* Close button at top right */}
-                    <div className="absolute top-4 right-4">
+                    {/* Header with Close button and Title - now properly aligned */}
+                    <div className="sticky top-0 bg-white z-10 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h2 className="text-3xl font-bold text-foreground">Ashutosh Chess <br /> Academy</h2>
                         <button
                             onClick={toggleMenu}
                             className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
                         >
                             <HiOutlineXMark className="h-6 w-6 text-gray-700" />
                         </button>
-                    </div>
-
-                    {/* Header with Academy name */}
-                    <div className="pt-16 px-6 pb-4 border-b border-gray-200">
-                        <h2 className="text-2xl font-bold text-foreground">Ashutosh Chess Academy</h2>
                     </div>
 
                     <div className="flex flex-col px-6 py-6">
@@ -107,7 +103,6 @@ const Header: React.FC = () => {
                                         onClick={toggleMenu}
                                         className="text-xl text-foreground hover:text-primary flex items-center gap-4 py-2"
                                     >
-                                        {/* Numbered circles */}
                                         <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-medium">
                                             {index + 1}
                                         </span>
@@ -122,7 +117,6 @@ const Header: React.FC = () => {
                             ))}
                         </ul>
                         
-                        {/* Join Now button at the bottom with padding */}
                         <div className="mt-8 mb-8">
                             <Link 
                                 href="/#pricing" 
