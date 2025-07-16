@@ -6,12 +6,19 @@ import { tournamentDetails } from '@/data/tournament'
 import GameDetails from '@/components/Competition/Timer'
 import FeeButton from './FeeBtn'
 import PrizeShowcase from './Show'
+import { FaTimes } from 'react-icons/fa'
 
 const TournamentPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleFeeClick = () => {
-        setIsModalOpen(true)
+        setIsLoading(true)
+        // Force loading for 3 seconds
+        setTimeout(() => {
+            setIsLoading(false)
+            setIsModalOpen(true)
+        }, 3000)
     }
 
     const closeModal = () => {
@@ -44,27 +51,36 @@ const TournamentPage: React.FC = () => {
                     <FeeButton dark onClick={handleFeeClick} />
                 </div>
 
-                {/* QR Modal */}
-                {isModalOpen && (
+                {/* QR Modal (also contains loading state) */}
+                {(isModalOpen || isLoading) && (
                     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
                         <div className="bg-white rounded-xl p-6 w-[90%] max-w-sm text-center relative shadow-xl">
-                            <button
-                                onClick={closeModal}
-                                className="absolute top-2 right-3 text-gray-600 hover:text-black text-lg"
-                            >
-                                ✕
-                            </button>
-                            <h2 className="text-xl font-bold mb-4">Scan to Pay</h2>
-                            <Image
-                                src="/qr.png" // Replace with actual QR
-                                alt="UPI QR"
-                                width={200}
-                                height={200}
-                                className="mx-auto"
-                            />
-                            <p className="mt-4 text-sm text-gray-700 font-normal">
-                                UPI: <br /><span className="font-semibold text-black text-lg">chiraggandhi2605@okhdfcbank</span>
-                            </p>
+                            {isLoading ? (
+                                <div className="flex flex-col items-center justify-center h-64">
+                                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500 border-r-black border-l-black mb-4"></div>
+                                    <p className="text-lg font-medium">Processing...</p>
+                                </div>
+                            ) : (
+                                <>
+                                    <button
+                                        onClick={closeModal}
+                                        className="absolute top-2 right-3 text-gray-600 hover:text-black text-lg"
+                                    >
+                                        <FaTimes />
+                                    </button>
+                                    <h2 className="text-xl font-bold mb-4">Scan to Pay</h2>
+                                    <Image
+                                        src="/qr.png"
+                                        alt="UPI QR"
+                                        width={200}
+                                        height={200}
+                                        className="mx-auto"
+                                    />
+                                    <p className="mt-4 text-sm text-gray-700 font-normal">
+                                        UPI: <br /><span className="font-semibold text-black text-lg">chiraggandhi2605@okhdfcbank</span>
+                                    </p>
+                                </>
+                            )}
                         </div>
                     </div>
                 )}
