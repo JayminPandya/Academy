@@ -4,10 +4,10 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { HiOutlineXMark, HiBars3 } from 'react-icons/hi2';
+import { FaChessKnight } from 'react-icons/fa';
 
 import Container from './Container';
 import { menuItems } from '@/data/menuItems';
-import Image from 'next/image';
 
 const Header: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -16,13 +16,15 @@ const Header: React.FC = () => {
         setIsOpen(!isOpen);
     };
 
+    const pricingLink = menuItems.find(item => item.text.toLowerCase() === 'pricing')?.url || '#pricing';
+
     return (
         <header className="bg-transparent fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
             <Container className="!px-0">
                 <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10">
-                    {/* Logo */}
+                    {/* Logo - Now using FaChessKnight icon */}
                     <Link href="/" className="flex items-center gap-2">
-                        <Image className="min-w-fit" src="/rook.svg" alt="Logo" width={50} height={50} />
+                        <FaChessKnight className="text-primary" size={32} />
                     </Link>
 
                     {/* Desktop Menu */}
@@ -39,6 +41,7 @@ const Header: React.FC = () => {
                                 </Link>
                             </li>
                         ))}
+
                         <li>
                             <Link href="/#pricing" className="text-black bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors">
                                 Join Now
@@ -69,32 +72,67 @@ const Header: React.FC = () => {
             {/* Mobile Menu with Transition */}
             <Transition
                 show={isOpen}
-                enter="transition ease-out duration-200 transform"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="transition ease-in duration-75 transform"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
             >
-                <div id="mobile-menu" className="md:hidden bg-white shadow-lg">
-                    <ul className="flex flex-col space-y-4 pt-1 pb-6 px-6">
-                        {menuItems.map(item => (
-                            <li key={item.text}>
-                                <Link
-                                    href={item.url}
-                                    onClick={toggleMenu}
-                                    className="text-foreground hover:text-primary flex items-center gap-2"
-                                >
-                                    <span>{item.text}</span>
-                                    {item.text.toLowerCase() === 'tournaments' && (
-                                        <span className="text-[10px] font-bold bg-red-600 text-white px-2 py-0.5 rounded-full">
-                                            NEW
+                <div 
+                    id="mobile-menu" 
+                    className="md:hidden fixed inset-0 bg-white z-40 overflow-y-auto"
+                >
+                    {/* Close button at top right */}
+                    <div className="absolute top-4 right-4">
+                        <button
+                            onClick={toggleMenu}
+                            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                        >
+                            <HiOutlineXMark className="h-6 w-6 text-gray-700" />
+                        </button>
+                    </div>
+
+                    {/* Header with Academy name */}
+                    <div className="pt-16 px-6 pb-4 border-b border-gray-200">
+                        <h2 className="text-2xl font-bold text-foreground">Ashutosh Chess Academy</h2>
+                    </div>
+
+                    <div className="flex flex-col px-6 py-6">
+                        <ul className="flex flex-col space-y-6">
+                            {menuItems.map((item, index) => (
+                                <li key={item.text}>
+                                    <Link
+                                        href={item.url}
+                                        onClick={toggleMenu}
+                                        className="text-xl text-foreground hover:text-primary flex items-center gap-4 py-2"
+                                    >
+                                        {/* Numbered circles */}
+                                        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-medium">
+                                            {index + 1}
                                         </span>
-                                    )}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
+                                        <span>{item.text}</span>
+                                        {item.text.toLowerCase() === 'tournaments' && (
+                                            <span className="text-xs font-bold bg-red-600 text-white px-2 py-1 rounded-full ml-auto">
+                                                NEW
+                                            </span>
+                                        )}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                        
+                        {/* Join Now button at the bottom with padding */}
+                        <div className="mt-8 mb-8">
+                            <Link 
+                                href="/#pricing" 
+                                className="block text-center text-lg text-black bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors"
+                                onClick={toggleMenu}
+                            >
+                                Join Now
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </Transition>
         </header>
