@@ -62,12 +62,12 @@ const TournamentPage: React.FC = () => {
                                 </div>
                             ) : (
                                 <>
-{/*                                     <button
+                                     <button
                                         onClick={closeModal}
                                         className="absolute top-2 right-3 text-gray-600 hover:text-black text-lg"
                                     >
                                         <FaTimes />
-                                    </button> */}
+                                    </button>
                                     <h2 className="text-xl font-bold mb-4">Closed</h2>
 {/*                                     <Image
                                         src="/qr.png"
