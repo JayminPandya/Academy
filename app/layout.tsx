@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Source_Sans_3, Manrope } from "next/font/google";
 
 import Header from "@/components/Header";
-import TournamentModal from "@/components/Banner/TournamentBanner";
+// import TournamentModal from "@/components/Banner/TournamentBanner";
 import Footer from "@/components/Footer";
 import { siteDetails } from '@/data/siteDetails';
 
@@ -46,7 +46,7 @@ export default function RootLayout({
       <body
         className={`${manrope.className} ${sourceSans.className} antialiased`}
       >
-        <TournamentModal />
+{/*         <TournamentModal /> */}
         <Header />
         <main>
           {children}
