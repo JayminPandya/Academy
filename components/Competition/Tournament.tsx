@@ -62,22 +62,25 @@ const TournamentPage: React.FC = () => {
                                 </div>
                             ) : (
                                 <>
-                                    <button
+{/*                                     <button
                                         onClick={closeModal}
                                         className="absolute top-2 right-3 text-gray-600 hover:text-black text-lg"
                                     >
                                         <FaTimes />
-                                    </button>
-                                    <h2 className="text-xl font-bold mb-4">Scan to Pay</h2>
-                                    <Image
+                                    </button> */}
+                                    <h2 className="text-xl font-bold mb-4">Closed</h2>
+{/*                                     <Image
                                         src="/qr.png"
                                         alt="UPI QR"
                                         width={200}
                                         height={200}
                                         className="mx-auto"
-                                    />
-                                    <p className="mt-4 text-sm text-gray-700 font-normal">
+                                    /> */}
+{/*                                     <p className="mt-4 text-sm text-gray-700 font-normal">
                                         UPI: <br /><span className="font-semibold text-black text-lg">chiraggandhi2605@okhdfcbank</span>
+                                    </p> */}
+     <p className="mt-4 text-sm text-gray-700 font-normal">
+                                        <br /><span className="font-semibold text-black text-lg">Better Luck Next Time</span>
                                     </p>
                                 </>
                             )}
