@@ -49,7 +49,7 @@ export default function MinimalBoxTimer() {
     <div className="flex justify-center p-4">
       {isExpired ? (
         <div className="font-mono font-bold text-2xl text-gray-800">
-          COUNTDOWN COMPLETE
+          Registrations Closed
         </div>
       ) : (
         <div className="flex items-center">
