@@ -57,7 +57,6 @@ const Footer: React.FC = () => {
             </div>
             <div className="mt-8 md:text-center text-foreground-accent px-6">
                 <p>Copyright &copy; {new Date().getFullYear()} {siteDetails.siteName}. All rights reserved.</p>
-                <p className="text-sm mt-2 text-gray-500">Made with &hearts; by <a href="https://ramicoin.com" target="_blank">Ramicoin Labs</a></p>
             </div>
         </footer>
     );
