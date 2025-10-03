@@ -30,7 +30,7 @@ export interface IFAQ {
 
 export interface ITestimonial {
     name: string;
-    role: string;
+    location: string;
     message: string;
     avatar: string;
 }
@@ -49,3 +49,4 @@ export interface ISocials {
     whatsapp?: string;
     [key: string]: string | undefined;
 }
+
