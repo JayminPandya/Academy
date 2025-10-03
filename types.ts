@@ -17,10 +17,17 @@ export interface IBenefitBullet {
 }
 
 export interface IPricing {
-    name: string;
-    icon: JSX.Element;
-    price: number | string;
-    features: string[];
+  name: string;
+  icon: JSX.Element;
+  price: number | string;
+  features: string[];
+  courceDetails: string[];
+}
+
+export interface ModalProps {
+  tier: IPricing;
+  onClose: () => void;
+  onConfirm: () => void;
 }
 
 export interface IFAQ {
@@ -49,4 +56,5 @@ export interface ISocials {
     whatsapp?: string;
     [key: string]: string | undefined;
 }
+
 
