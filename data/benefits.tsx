@@ -45,6 +45,7 @@ export const benefits: IBenefit[] = [
                 icon: <FiPieChart size={26} />
             }
         ],
-        imageSrc: "/zero.webp"
+        imageSrc: "/Section_Image.webp"
     },
 ]
+
