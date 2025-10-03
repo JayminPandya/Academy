@@ -58,7 +58,7 @@ const App: React.FC = () => {
   const currentTestimonial: ITestimonial = testimonials[currentIndex];
 
   return (
-    <div className="bg-white text-gray-800 flex items-center justify-center font-sans p-4 sm:p-6 lg:p-8">
+    <div className="bg-white text-gray-800 flex items-center justify-center font-sans p-4">
       <style>
         {`
                     @keyframes fadeIn {
@@ -70,27 +70,27 @@ const App: React.FC = () => {
                     }
                 `}
       </style>
-      <div className="w-full max-w-6xl mx-auto flex flex-row items-center gap-4 sm:gap-6">
+      <div className="w-full max-w-6xl mx-auto flex flex-wrap md:flex-nowrap justify-center items-center gap-y-4 gap-x-4 md:gap-x-6">
         <button
           onClick={handlePrev}
           aria-label="Previous testimonial"
-          className="group flex-shrink-0 bg-white hover:bg-gray-100 text-gray-400 hover:text-gray-800 rounded-full p-2 sm:p-3 transition-all duration-300 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-400"
+          className="group order-2 md:order-1 flex-shrink-0 bg-white hover:bg-gray-100 text-gray-400 hover:text-gray-800 rounded-full p-3 transition-all duration-300 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-400"
         >
           <ArrowIcon
             direction="left"
-            className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:-translate-x-1 rotate-180"
+            className="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-1 rotate-180"
           />
         </button>
 
-        <div className="relative w-full">
+        <div className="relative w-full order-1 md:order-2">
           <figure
             key={currentIndex}
-            className="bg-gray-50/50 border border-gray-200 p-6 sm:p-8 rounded-2xl shadow-lg flex flex-col items-center text-center animate-fadeIn"
+            className="bg-gray-50/50 border border-gray-200 p-8 rounded-2xl shadow-lg flex flex-col justify-center items-center text-center animate-fadeIn h-[32rem] sm:h-[28rem]"
             aria-live="polite"
           >
-            <QuoteIcon className="w-10 h-10 sm:w-12 sm:h-12 text-gray-200 mb-4" />
+            <QuoteIcon className="w-12 h-12 text-gray-200 mb-4" />
             <blockquote className="max-w-prose">
-              <p className="text-base sm:text-lg text-gray-600 italic">
+              <p className="text-lg text-gray-600 italic">
                 &quot;{currentTestimonial.message}&quot;
               </p>
             </blockquote>
@@ -103,7 +103,7 @@ const App: React.FC = () => {
                 className="rounded-full shadow-md border-2 border-white"
               />
               <div className="mt-3">
-                <h3 className="text-md sm:text-lg font-semibold text-gray-900">
+                <h3 className="text-lg font-semibold text-gray-900">
                   {currentTestimonial.name}
                 </h3>
                 <p className="text-sm text-gray-500">
@@ -113,15 +113,14 @@ const App: React.FC = () => {
             </figcaption>
           </figure>
         </div>
-
         <button
           onClick={handleNext}
           aria-label="Next testimonial"
-          className="group flex-shrink-0 bg-white hover:bg-gray-100 text-gray-400 hover:text-gray-800 rounded-full p-2 sm:p-3 transition-all duration-300 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-400"
+          className="group order-3 flex-shrink-0 bg-white hover:bg-gray-100 text-gray-400 hover:text-gray-800 rounded-full p-3 transition-all duration-300 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-400"
         >
           <ArrowIcon
             direction="right"
-            className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:translate-x-1"
+            className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1"
           />
         </button>
       </div>
