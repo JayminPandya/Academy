@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { FaChessKnight } from 'react-icons/fa';
+import Image from "next/image";
 
 import { siteDetails } from '@/data/siteDetails';
 import { footerDetails } from '@/data/footer';
@@ -12,7 +12,14 @@ const Footer: React.FC = () => {
             <div className="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div>
                     <Link href="/" className="flex items-center gap-2">
-                        <FaChessKnight className="min-w-fit w-5 h-5 md:w-7 md:h-7" />
+                        <Image
+              src="/ACA_Logo.png"
+              alt="Ashutosh Chess Academy Logo"
+              width="164"
+              height="60"
+              quality={100}
+              className="min-w-fit w-12 h-16 md:w-40 md:h-16"
+            />
                         <h3 className="manrope text-xl font-semibold cursor-pointer">
                             {siteDetails.siteName}
                         </h3>
@@ -63,3 +70,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+
