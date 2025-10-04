@@ -9,8 +9,8 @@ export const testimonials: ITestimonial[] = [
     avatar: "https://placehold.co/100x100/E2D5FF/311A5B?text=JS",
   },
   {
-    name: "Parents of Kiyan Hiran",
-    location: "UgandaGrowth and Discipline Testimonials",
+    name: "Parents of Kiyan Hirani",
+    location: "Uganda",
     message:
       "Our son Kiyan has twice attained 5th rank in Uganda's National U-10 and carries a FIDE rating of 1646. The mentorship at Ashutosh Chess Academy ensured he could compete at the top level with international exposure. Their online classes are truly global in quality",
     avatar: "https://placehold.co/100x100/E2D5FF/311A5B?text=KH",
@@ -26,7 +26,7 @@ export const testimonials: ITestimonial[] = [
     name: "Parents of Ronak Makawana",
     location: "Botad",
     message:
-      "Ronak has blossomed into a focused thinker because of Ashutosh Sir's teaching. His FIDE rating of 1543 is only one sign of his growth—the real gift is the patience and problem-solving attitude he has developed.",
+      "Ronak has blossomed into a focused thinker because of Jaymin Sir's teaching. His FIDE rating of 1543 is only one sign of his growth—the real gift is the patience and problem-solving attitude he has developed.",
     avatar: "https://placehold.co/100x100/E2D5FF/311A5B?text=RM",
   },
   {
@@ -52,11 +52,18 @@ export const testimonials: ITestimonial[] = [
     avatar: "https://placehold.co/100x100/E2D5FF/311A5B?text=DT",
   },
   {
-    name: "Parents of Tasmaiv & Meetyarth Sonagara",
+    name: "Parents of Tasmaiv Sonagara",
     location: "Amreli",
     message:
-      "As parents, we are amazed at how an academy based in Gujarat can mentor and train a global community of players. For our children, Tasmaiv and Meetyarth, both international rated players, the Academy has instilled sporting spirit along with consistent results in open Gujarat tournaments.",
+      "My son has made exceptional progress since joining Ashutosh Chess Academy. The coaches are patient, knowledgeable, and dedicated, helping him build confidence and strategic depth. Thanks to their guidance, he has won several state-level tournaments, including Open Gujarat Chess Championships, and now holds a FIDE rating of 1545. We're truly grateful to the academy for nurturing his talent.",
     avatar: "https://placehold.co/100x100/E2D5FF/311A5B?text=TS",
+  },
+  {
+    name: "Parents of Meetyarth Sonagara",
+    location: "Amreli",
+    message:
+      "We're thrilled to share that our son Meetyarth (U-15) has shown amazing growth at Ashutosh Chess Academy! Thanks to the academy's dedicated and knowledgeable coaches, he has developed great confidence and strategic skills—winning multiple Open Gujarat Chess Championships and achieving a FIDE rating of 1484.We're so proud of his progress and grateful to the entire academy team for guiding him so well!",
+    avatar: "https://placehold.co/100x100/E2D5FF/311A5B?text=MS",
   },
   {
     name: "Parents of Fiyona Sosa",
@@ -69,7 +76,7 @@ export const testimonials: ITestimonial[] = [
     name: "Parents of Tanvi Makawana",
     location: "Botad",
     message:
-      "Even at a beginner's level, Ashutosh Sir gives equal importance and encouragement. For my daughter Tanvi, who is just 11, the Academy has been the stepping stone to her success in Botad tournaments.",
+      "Even at a beginner's level, Jaymin Sir gives equal importance and encouragement. For my daughter Tanvi, who is just 11, the Academy has been the stepping stone to her success in Botad tournaments.",
     avatar: "https://placehold.co/100x100/E2D5FF/311A5B?text=TM",
   },
   {
