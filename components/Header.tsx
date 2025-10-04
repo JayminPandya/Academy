@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { HiOutlineXMark, HiBars3 } from 'react-icons/hi2';
-import { FaChessKnight } from 'react-icons/fa';
+import Image from "next/image";
 
 import Container from './Container';
 import { menuItems } from '@/data/menuItems';
@@ -22,7 +22,14 @@ const Header: React.FC = () => {
                 <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10">
                     {/* Logo with Knight Icon */}
                     <Link href="/" className="flex items-center gap-2">
-                        <FaChessKnight className="text-primary" size={32} />
+                        <Image
+              src="/ACA_Logo.png"
+              alt="Ashutosh Chess Academy Logo"
+              width="164"
+              height="60"
+              quality={100}
+              className="rounded-xl lg:ml-0"
+            />
                     </Link>
 
                     {/* Desktop Menu */}
@@ -83,7 +90,14 @@ const Header: React.FC = () => {
                 >
                     {/* Header with Knight Icon and Close Button */}
                     <div className="sticky top-0 bg-white z-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                        <FaChessKnight className="text-primary" size={36} />
+                        <Image
+              src="/ACA_Logo.png"
+              alt="Ashutosh Chess Academy Logo"
+              width="164"
+              height="60"
+              quality={100}
+              className="rounded-xl lg:ml-0"
+            />
                         <button
                             onClick={toggleMenu}
                             className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors focus:outline-none"
@@ -135,3 +149,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
