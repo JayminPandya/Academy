@@ -43,6 +43,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/png" href="ACA_Monogram.png" />
+      </head>
       <body
         className={`${manrope.className} ${sourceSans.className} antialiased`}
       >
@@ -56,3 +59,4 @@ export default function RootLayout({
     </html>
   );
 }
+
