@@ -63,7 +63,7 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
           <button
             onClick={() => setModalOpen(true)}
             className={clsx("w-full py-3 px-4 rounded-full transition-colors", {
-              "bg-primary hover:bg-primary-accent": highlight,
+              "text-white bg-primary hover:bg-primary-accent": highlight,
               "bg-hero-background hover:bg-gray-200": !highlight,
             })}
           >
@@ -98,3 +98,4 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
 };
 
 export default PricingColumn;
+
