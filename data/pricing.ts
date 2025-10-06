@@ -8,8 +8,8 @@ export const tiers: IPricing[] = [
     price: 5000,
     features: [
       "20 Hours coaching",
-      "Basic Gameplay",
-      "Fundamentals of the chess",
+      "Game - based learning",
+      "One and Three Move Checkmate Patterns",
     ],
     courceDetails: [
       "Understanding the chessboard and pieces",
@@ -29,9 +29,9 @@ export const tiers: IPricing[] = [
     icon: FaChessBishop({ size: 26 }) as JSX.Element,
     price: 7500,
     features: [
-      "20 Hours coaching",
-      "Tactics & Checkmate Patterns",
-      "Game Analysis & Feedback",
+     "20 Hours coaching",
+      "Endgame Patterns and Techniques",
+      "Four and Five Move Checkmate Patterns",
     ],
     courceDetails: [
       "In-depth opening principles and popular opening repertoires for White and Black",
@@ -50,11 +50,8 @@ export const tiers: IPricing[] = [
     price: 10000,
     features: [
       "20 Hours coaching",
-      "Personalized Coaching Plan",
-      "Unlimited Practice Sessions",
-      "Grandmaster Training",
-      "Tournament Preparation",
-      "Dedicated Mentor Support",
+      "FIDE Title Player Traning Session",
+      "Grandmaster's various Game Analysis",
     ],
     courceDetails: [
       "In-depth study of classical and modern opening repertoires with emphasis on theory and novelty",
@@ -68,3 +65,4 @@ export const tiers: IPricing[] = [
     ],
   },
 ];
+
