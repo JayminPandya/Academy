@@ -5,10 +5,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #FED835;
+  --primary: #b89658;
   --secondary: #304fff;
 
-  --primary-accent: #e5c230;
+  --primary-accent: #b89658e4;
   --foreground-accent: #454545;
   --hero-background: #F3F3F5;
 }
@@ -51,4 +51,5 @@ h1, h2, h3, h4, h5, h6 {
 
 .benefit-section:last-of-type > div {
   @apply mb-10;
+
 }
