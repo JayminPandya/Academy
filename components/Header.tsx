@@ -48,7 +48,7 @@ const Header: React.FC = () => {
                         ))}
 
                         <li>
-                            <Link href="/#pricing" className="text-black bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors">
+                            <Link href="/#pricing" className="text-white bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors">
                                 Join Now
                             </Link>
                         </li>
@@ -149,4 +149,5 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
 
