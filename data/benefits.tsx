@@ -23,7 +23,7 @@ export const benefits: IBenefit[] = [
                 icon: <FiTrendingUp size={26} />
             }
         ],
-        imageSrc: "/learn.webp"
+        imageSrc: "/Section_Teach.png"
     },
     {
         title: "Beginner Friendly",
@@ -48,4 +48,5 @@ export const benefits: IBenefit[] = [
         imageSrc: "/Section_Image.webp"
     },
 ]
+
 
