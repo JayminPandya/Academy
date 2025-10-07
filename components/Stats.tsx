@@ -8,11 +8,11 @@ const achievementsData = [
     value: "5000+",
     title: "Student Taught",
     description:
-      "We have proudly mentored thousands of students on their chess journey.",
+      "We have proudly mentored thousands of students on their chess journey through seminars and group classes.",
   },
   {
     icon: <IoEarth className="h-12 w-12" />,
-    value: "20+",
+    value: "5+",
     title: "Countries Reached",
     description:
       "Our academy welcomes aspiring chess players from all over the world.",
@@ -125,3 +125,4 @@ const AchievementsSection = () => {
 };
 
 export default AchievementsSection;
+
