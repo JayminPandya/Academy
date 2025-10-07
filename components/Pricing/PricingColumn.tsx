@@ -67,7 +67,7 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
               "bg-hero-background hover:bg-gray-200": !highlight,
             })}
           >
-            Get Started
+            Enroll Now
           </button>
         </div>
         <div className="p-6 mt-1">
@@ -98,4 +98,5 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
 };
 
 export default PricingColumn;
+
 
