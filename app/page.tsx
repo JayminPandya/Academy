@@ -19,16 +19,16 @@ const HomePage: React.FC = () => {
 
         <Section
           id="pricing"
-          title="Pricing"
-          description="Simple and transparent pricing."
+          title="Start Your Chess Adventure"
+          description="Find the perfect path to begin your journey to becoming a champion."
         >
           <Pricing />
         </Section>
 
         <Section
           id="testimonials"
-          title="What Parents Say !"
-          description="."
+          title="Hear From Our Chess Families"
+          description="Discover the real impact of our coaching from the parents who trust us."
         >
           <Testimonials />
         </Section>
@@ -44,3 +44,4 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+
