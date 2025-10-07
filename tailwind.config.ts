@@ -17,9 +17,6 @@ const config: Config = {
         "primary-accent": "var(--primary-accent)",
         "foreground-accent": "var(--foreground-accent)",
         "hero-background": "var(--hero-background)",
-        "primary-accent": "var(--primary-accent)",
-        "foreground-accent": "var(--foreground-accent)",
-        "hero-background": "var(--hero-background)",
         "primary-gold": "#b89658",
         "text-dark": "#333333",
         "text-medium": "#666666",
@@ -31,4 +28,5 @@ const config: Config = {
 };
 
 export default config;
+
 
