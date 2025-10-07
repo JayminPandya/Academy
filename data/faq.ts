@@ -15,7 +15,7 @@ export const faqs: IFAQ[] = [
   {
     question: "What types of coaching do you offer?",
     answer:
-      "Both online (live video classes) and offline (in-person) courses are available.",
+      "Both online (live video classes) and offline (one - on - one) courses are available.",
   },
   {
     question: "How can I register for coaching?",
@@ -43,11 +43,6 @@ export const faqs: IFAQ[] = [
       "Yes, there is specific training for tournament strategies and preparation.",
   },
   {
-    question: "Is mentorship available?",
-    answer:
-      "Individual mentorship programs and guidance are available for all students.",
-  },
-  {
     question: "Will I get a certificate?",
     answer:
       "Certificates are awarded based on progress and evaluation after completion of the coaching program.",
@@ -60,14 +55,5 @@ export const faqs: IFAQ[] = [
     question: "Are classes online or offline?",
     answer: "Both modes are available. Zoom or Room - your choice.",
   },
-  {
-    question: "What if I miss a class?",
-    answer:
-      "Missed classes can be rescheduled or covered in revision sessions.",
-  },
-  {
-    question: "Are there regular tournaments?",
-    answer:
-      "Yes, we host regular practice matches and online tournaments to help students apply what they learn.",
-  },
 ];
+
