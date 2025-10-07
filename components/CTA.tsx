@@ -148,7 +148,7 @@ const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
                 <img
                   src="/chess_image.png"
                   alt="Children learning in a class"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
@@ -294,5 +294,6 @@ const InputField: React.FC<InputFieldProps> = ({
 );
 
 export default App;
+
 
 
