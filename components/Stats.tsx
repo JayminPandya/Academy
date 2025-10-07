@@ -65,45 +65,57 @@ const AchievementsSection = () => {
         </div>
 
         <div className="mt-24">
-          <div className="mx-auto bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-lg flex flex-col lg:flex-row overflow-hidden">
-            <div className="hidden lg:block lg:w-1/4">
-              <img
-                src="/Gukesh.png"
-                alt="Gukesh D"
-                className="w-full h-48 lg:h-full object-cover"
-              />
-            </div>
-
-            <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center items-center text-center">
-              <div className="flex lg:hidden justify-center items-center gap-4 mb-6">
+          <div className="flex flex-col lg:flex-row justify-center items-stretch gap-6">
+            <div className="bg-card-bg rounded-2xl shadow-xl overflow-hidden flex flex-col lg:flex-row flex-1 max-w-xl">
+              <div className="hidden lg:block lg:w-[35%]">
                 <img
                   src="/Gukesh.png"
                   alt="Gukesh D"
-                  className="w-20 h-20 rounded-full object-cover border-2 border-primary-gold shadow-md"
+                  className="w-full h-full object-cover object-top"
                 />
+              </div>
+              <div className="lg:w-[65%] p-8 flex flex-col justify-center text-center lg:text-left">
+                <div className="lg:hidden mx-auto mb-6">
+                  <img
+                    src="/Gukesh.png"
+                    alt="Gukesh D"
+                    className="w-48 h-48 rounded-2xl object-cover object-top shadow-lg border-2 border-primary-gold"
+                  />
+                </div>
+                <blockquote className="text-2xl italic text-text-dark leading-relaxed">
+                  "My message for all the kids around the globe is just to enjoy
+                  it, chess is a beautiful game."
+                </blockquote>
+                <cite className="mt-4 block font-bold text-xl text-primary-gold not-italic">
+                  — Gukesh D
+                </cite>
+              </div>
+            </div>
+
+            <div className="bg-card-bg rounded-2xl shadow-xl overflow-hidden flex flex-col lg:flex-row-reverse flex-1 max-w-xl">
+              <div className="hidden lg:block lg:w-[35%]">
                 <img
                   src="/Divya.png"
                   alt="Divya Deshmukh"
-                  className="w-20 h-20 rounded-full object-cover border-2 border-primary-gold shadow-md"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
-
-              <blockquote className="text-xl italic text-text-dark leading-relaxed">
-                " I believe in making good moves, each one taking me closer to
-                my goals. I've achieved one, but there are a hundred more
-                waiting. "
-              </blockquote>
-              <cite className="mt-6 block font-bold text-lg text-primary-gold not-italic">
-                ~ Gukesh D & Divya Deshmukh
-              </cite>
-            </div>
-
-            <div className="hidden lg:block lg:w-1/4">
-              <img
-                src="/Divya.png"
-                alt="Divya Deshmukh"
-                className="w-full h-48 lg:h-full object-cover"
-              />
+              <div className="lg:w-[65%] p-8 flex flex-col justify-center text-center lg:text-left">
+                <div className="lg:hidden mx-auto mb-6">
+                  <img
+                    src="/Divya.png"
+                    alt="Divya Deshmukh"
+                    className="w-48 h-48 rounded-2xl object-cover object-top shadow-lg border-2 border-primary-gold"
+                  />
+                </div>
+                <blockquote className="text-2xl italic text-text-dark leading-relaxed">
+                  "It's not about who is sitting on the other side, it's about
+                  the moves you make on the board."
+                </blockquote>
+                <cite className="mt-4 block font-bold text-xl text-primary-gold not-italic">
+                  — Divya Deshmukh
+                </cite>
+              </div>
             </div>
           </div>
         </div>
