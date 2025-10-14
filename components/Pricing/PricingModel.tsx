@@ -1,86 +1,80 @@
-import { ModalProps } from "@/types";
+"use client";
 
-const CheckCircleIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    width="20"
-    height="20"
-  >
-    <path
-      fillRule="evenodd"
-      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-      clipRule="evenodd"
-    />
-  </svg>
-);
+import React, { useState } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa";
+import { faqs } from "@/data/faq";
 
-const CloseIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    width="24"
-    height="24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6 18L18 6M6 6l12 12"
-    />
-  </svg>
-);
+const FAQSection: React.FC = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-const PricingModal: React.FC<ModalProps> = ({ tier, onClose, onConfirm }) => {
+  const [showAll, setShowAll] = useState(false);
+  const INITIAL_VISIBLE_FAQS = 5;
+
+  const displayedFaqs = showAll ? faqs : faqs.slice(0, INITIAL_VISIBLE_FAQS);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4 animate-fadeIn"
-      onClick={onClose}
-    >
-      <div
-        className="bg-white rounded-xl shadow-2xl w-full max-w-md mx-auto flex flex-col max-h-[90vh] transform animate-scaleIn"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex justify-between items-center p-5 border-b border-gray-200 flex-shrink-0">
-          <h3 className="text-2xl font-semibold text-gray-800">
-            {tier.icon} {tier.name} Plan
-          </h3>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-800 transition-colors"
-          >
-            <CloseIcon />
-          </button>
+    <section className="bg-white py-16 sm:py-24" id="faqs">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl md:text-6xl font-extrabold text-text-dark leading-tight">
+            Your <span className="text-[#b89658]">Questions</span>, Answered!
+          </h2>
+          <p className="mt-4 text-xl text-text-medium font-medium">
+            Everything you need to know to start your chess adventure.
+          </p>
         </div>
 
-        <div className="p-6 overflow-y-auto">
-          <p className="font-semibold text-gray-700 mb-4">Course Details</p>
-          <ul className="space-y-3">
-            {tier.courceDetails.map((feature, index) => (
-              <li key={index} className="flex items-start">
-                <CheckCircleIcon className="h-5 w-5 text-teal-500 mr-3 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-600">{feature}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="space-y-4">
+          {displayedFaqs.map((faq, index) => (
+            <div
+              key={index}
+              className="bg-gray-50 rounded-2xl shadow-sm overflow-hidden transition-all duration-300 border border-gray-200"
+            >
+              <button
+                onClick={() => toggleFAQ(index)}
+                className="w-full flex justify-between items-center text-left p-6 focus:outline-none"
+              >
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {faq.question}
+                </h3>
+                <span className="text-[#b89658] flex-shrink-0 ml-4">
+                  {openIndex === index ? <FaMinus /> : <FaPlus />}
+                </span>
+              </button>
+              <div
+                className={`grid transition-all duration-500 ease-in-out ${
+                  openIndex === index
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="p-6 pt-0 text-gray-600">
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="p-5 border-t border-gray-200 bg-gray-50 rounded-b-xl flex-shrink-0">
-          <button
-            onClick={onConfirm}
-            className="w-full py-3 px-4 rounded-lg bg-green-500 text-white font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105"
-          >
-            Confirm on WhatsApp
-          </button>
-        </div>
+        {faqs.length > INITIAL_VISIBLE_FAQS && (
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="bg-[#b89658] text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-[#b89658]"
+            >
+              {showAll ? "Show Less Questions" : "Show More Questions"}
+            </button>
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 
-export default PricingModal;
+export default FAQSection;
