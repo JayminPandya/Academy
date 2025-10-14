@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { IPricing } from "@/types";
+import { IPricing, ModalProps } from "@/types";
 import React, { useState } from "react";
 import PricingModal from "./PricingModel";
 
