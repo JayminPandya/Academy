@@ -8,40 +8,25 @@ import Container from "@/components/Container";
 import Section from "@/components/Section";
 import Stats from "@/components/Stats";
 import CTA from "@/components/CTA";
+import CoachSection from "@/components/CoachSection";
+import TournamentModal from "@/components/Banner/TournamentBanner";
 
 const HomePage: React.FC = () => {
   return (
     <>
       <Hero />
-      <Logos />
       <Container>
-        <Benefits />
-
-        <Section
-          id="pricing"
-          title="Start Your Chess Adventure"
-          description="Find the perfect path to begin your journey to becoming a champion."
-        >
-          <Pricing />
-        </Section>
-
-        <Section
-          id="testimonials"
-          title="Hear From Our Chess Families"
-          description="Discover the real impact of our coaching from the parents who trust us."
-        >
-          <Testimonials />
-        </Section>
-
-        <FAQ />
-
         <Stats />
-        
+        <Benefits />
+        <CoachSection />
+        <Testimonials />
+        <Pricing />
         <CTA />
+        <FAQ />
       </Container>
+      <Logos />
     </>
   );
 };
 
 export default HomePage;
-
