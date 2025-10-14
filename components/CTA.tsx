@@ -53,22 +53,26 @@ const ErrorIcon = ({ className }: { className?: string }) => (
 );
 
 interface FormData {
+  kidName: string;
+  childAge: string;
   parentName: string;
   mobileNumber: string;
-  childAge: string;
   state: string;
   city: string;
+  country: string;
   email: string;
 }
 
 const App: React.FC = () => {
   const form = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState<FormData>({
+    kidName: "",
+    childAge: "",
     parentName: "",
     mobileNumber: "",
-    childAge: "",
     state: "",
     city: "",
+    country: "",
     email: "",
   });
   const [showSuccess, setShowSuccess] = useState(false);
@@ -87,9 +91,9 @@ const App: React.FC = () => {
     setError(null);
     setShowSuccess(false);
 
-    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
-const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
-const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
+    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
     emailjs
       .sendForm(serviceID, templateID, form.current, publicKey)
@@ -98,11 +102,13 @@ const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
           console.log("SUCCESS!", result.text);
           setShowSuccess(true);
           setFormData({
+            kidName: "",
+            childAge: "",
             parentName: "",
             mobileNumber: "",
-            childAge: "",
             state: "",
             city: "",
+            country: "",
             email: "",
           });
         },
@@ -162,6 +168,22 @@ const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
                 <form ref={form} onSubmit={handleSubmit} className="space-y-6">
                   <InputField
                     icon={<LuUser2 />}
+                    name="kidName"
+                    label="Kid's Name"
+                    placeholder="Enter full name"
+                    value={formData.kidName}
+                    onChange={handleChange}
+                  />
+                  <InputField
+                    name="childAge"
+                    label="Child's Age"
+                    type="number"
+                    placeholder="Years"
+                    value={formData.childAge}
+                    onChange={handleChange}
+                  />
+                  <InputField
+                    icon={<LuUser2 />}
                     name="parentName"
                     label="Parent's Name"
                     placeholder="Enter full name"
@@ -179,11 +201,10 @@ const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
                   />
                   <div className="flex flex-col sm:flex-row gap-4">
                     <InputField
-                      name="childAge"
-                      label="Child's Age"
-                      type="number"
-                      placeholder="Years"
-                      value={formData.childAge}
+                      name="city"
+                      label="City"
+                      placeholder="Your city"
+                      value={formData.city}
                       onChange={handleChange}
                     />
                     <InputField
@@ -195,10 +216,10 @@ const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
                     />
                   </div>
                   <InputField
-                    name="city"
-                    label="City"
-                    placeholder="Your city"
-                    value={formData.city}
+                    name="country"
+                    label="Country"
+                    placeholder="Your Country"
+                    value={formData.country}
                     onChange={handleChange}
                   />
                   <InputField
@@ -294,6 +315,3 @@ const InputField: React.FC<InputFieldProps> = ({
 );
 
 export default App;
-
-
-
