@@ -91,9 +91,9 @@ const App: React.FC = () => {
     setError(null);
     setShowSuccess(false);
 
-    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
+    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
 
     emailjs
       .sendForm(serviceID, templateID, form.current, publicKey)
@@ -315,3 +315,4 @@ const InputField: React.FC<InputFieldProps> = ({
 );
 
 export default App;
+
