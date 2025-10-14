@@ -1,123 +1,80 @@
 "use client";
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Transition,
-} from "@headlessui/react";
-import { BiMinus, BiPlus } from "react-icons/bi";
 
-import SectionTitle from "./SectionTitle";
+import React, { useState } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa";
 import { faqs } from "@/data/faq";
-import { useState } from "react";
 
-const ChevronDownIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2.5}
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-    />
-  </svg>
-);
+const FAQSection: React.FC = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-const ChevronUpIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2.5}
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M4.5 15.75l7.5-7.5 7.5 7.5"
-    />
-  </svg>
-);
-
-const FAQ: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
-  const INITIAL_VISIBLE_FAQS = 7;
+  const INITIAL_VISIBLE_FAQS = 5;
 
   const displayedFaqs = showAll ? faqs : faqs.slice(0, INITIAL_VISIBLE_FAQS);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <section id="faq" className="py-10 lg:py-20">
-      <div className="flex flex-col lg:flex-row gap-10">
-        <div className="">
-          <p className="hidden lg:block text-foreground-accent">FAQ&apos;S</p>
-          <SectionTitle>
-            <h2 className="my-3 !leading-snug lg:max-w-sm text-center lg:text-left">
-              Frequently Asked Questions
-            </h2>
-          </SectionTitle>
-          <p className="lg:mt-10 text-foreground-accent text-center lg:text-left">
-            Ask us anything!
+    <section className="bg-white py-16 sm:py-24" id="faqs">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl md:text-6xl font-extrabold text-text-dark leading-tight">
+            Your <span className="text-[#b89658]">Questions</span>, Answered!
+          </h2>
+          <p className="mt-4 text-xl text-text-medium font-medium">
+            Everything you need to know to start your chess adventure.
           </p>
         </div>
 
-        <div className="w-full lg:w-2/3">
-          <div className="w-full space-y-4">
-            {displayedFaqs.map((faq, index) => (
-              <div key={index} className="border-t border-gray-200">
-                <Disclosure>
-                  {({ open }) => (
-                    <>
-                      <DisclosureButton className="flex items-center justify-between w-full py-5 text-left text-lg font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-teal-500 focus-visible:ring-opacity-75">
-                        <span>{faq.question}</span>
-                        {open ? (
-                          <BiMinus className="w-5 h-5 text-secondary" />
-                        ) : (
-                          <BiPlus className="w-5 h-5 text-secondary" />
-                        )}
-                      </DisclosureButton>
-                      <Transition
-                        enter="transition duration-100 ease-out"
-                        enterFrom="transform scale-95 opacity-0"
-                        enterTo="transform scale-100 opacity-100"
-                        leave="transition duration-75 ease-out"
-                        leaveFrom="transform scale-100 opacity-100"
-                        leaveTo="transform scale-95 opacity-0"
-                      >
-                        <DisclosurePanel className="pb-5 pr-4 text-gray-600">
-                          {faq.answer}
-                        </DisclosurePanel>
-                      </Transition>
-                    </>
-                  )}
-                </Disclosure>
-              </div>
-            ))}
-          </div>
-
-          {faqs.length > INITIAL_VISIBLE_FAQS && (
-            <div className="mt-8 border-t border-gray-200 pt-6">
+        <div className="space-y-4">
+          {displayedFaqs.map((faq, index) => (
+            <div
+              key={index}
+              className="bg-gray-50 rounded-2xl shadow-sm overflow-hidden transition-all duration-300 border border-gray-200"
+            >
               <button
-                onClick={() => setShowAll(!showAll)}
-                className="flex items-center justify-center gap-2 w-full text-center font-semibold text-secondary hover:text-secondary transition-colors duration-300"
+                onClick={() => toggleFAQ(index)}
+                className="w-full flex justify-between items-center text-left p-6 focus:outline-none"
               >
-                <span>{showAll ? "Show Less" : "Show More Questions"}</span>
-                {showAll ? (
-                  <ChevronUpIcon className="w-5 h-5" />
-                ) : (
-                  <ChevronDownIcon className="w-5 h-5" />
-                )}
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {faq.question}
+                </h3>
+                <span className="text-[#b89658] flex-shrink-0 ml-4">
+                  {openIndex === index ? <FaMinus /> : <FaPlus />}
+                </span>
               </button>
+              <div
+                className={`grid transition-all duration-500 ease-in-out ${
+                  openIndex === index
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="p-6 pt-0 text-gray-600">
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
+          ))}
         </div>
+
+        {faqs.length > INITIAL_VISIBLE_FAQS && (
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="bg-[#b89658] text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-[#b89658]"
+            >
+              {showAll ? "Show Less Questions" : "Show More Questions"}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-export default FAQ;
+export default FAQSection;
