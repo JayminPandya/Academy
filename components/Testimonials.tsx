@@ -3,129 +3,121 @@ import React, { useState } from "react";
 import { testimonials } from "@/data/testimonials";
 import { ITestimonial } from "@/types";
 
-interface ArrowIconProps extends React.SVGProps<SVGSVGElement> {
-  direction?: "left" | "right";
-}
-
-interface QuoteIconProps {
-  className?: string;
-}
-
-const ArrowIcon: React.FC<ArrowIconProps> = ({
-  direction = "right",
-  ...props
-}) => (
+const ArrowIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    width="24"
-    height="24"
+    className={className}
     fill="currentColor"
-    transform={direction === "left" ? "right" : ""}
-    {...props}
   >
-    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path>
+    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
   </svg>
 );
 
-const QuoteIcon: React.FC<QuoteIconProps> = ({ className }) => (
+const QuoteIcon = ({ className }: { className?: string }) => (
   <svg
     className={className}
-    width="24"
-    height="24"
     viewBox="0 0 24 24"
     fill="currentColor"
     aria-hidden="true"
   >
-    <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"></path>
+    <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" />
   </svg>
 );
 
-const App: React.FC = () => {
+const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const handlePrev = (): void => {
-    const newIndex =
-      (currentIndex - 1 + testimonials.length) % testimonials.length;
-    setCurrentIndex(newIndex);
+    setCurrentIndex(
+      (currentIndex - 1 + testimonials.length) % testimonials.length
+    );
   };
 
   const handleNext = (): void => {
-    const newIndex = (currentIndex + 1) % testimonials.length;
-    setCurrentIndex(newIndex);
+    setCurrentIndex((currentIndex + 1) % testimonials.length);
   };
 
   const currentTestimonial: ITestimonial = testimonials[currentIndex];
 
   return (
-    <div className="bg-white text-gray-800 flex items-center justify-center font-sans p-4">
+    <section className="bg-white py-16 sm:py-28" id="testimonials">
       <style>
         {`
-                    @keyframes fadeIn {
-                        from { opacity: 0; transform: scale(0.98); }
-                        to { opacity: 1; transform: scale(1); }
-                    }
-                    .animate-fadeIn {
-                        animation: fadeIn 0.6s ease-in-out forwards;
-                    }
-                `}
+          @keyframes fadeIn {
+              from { opacity: 0; transform: scale(0.98); }
+              to { opacity: 1; transform: scale(1); }
+          }
+          .animate-fadeIn {
+              animation: fadeIn 0.6s ease-in-out forwards;
+          }
+        `}
       </style>
-      <div className="w-full max-w-6xl mx-auto flex flex-wrap md:flex-nowrap justify-center items-center gap-y-4 gap-x-4 md:gap-x-6">
-        <button
-          onClick={handlePrev}
-          aria-label="Previous testimonial"
-          className="group order-2 md:order-1 flex-shrink-0 bg-white hover:bg-gray-100 text-gray-400 hover:text-gray-800 rounded-full p-3 transition-all duration-300 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-400"
-        >
-          <ArrowIcon
-            direction="left"
-            className="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-1 rotate-180"
-          />
-        </button>
-
-        <div className="relative w-full order-1 md:order-2">
-          <figure
-            key={currentIndex}
-            className="bg-gray-50/50 border border-gray-200 p-8 rounded-2xl shadow-lg flex flex-col justify-center items-center text-center animate-fadeIn h-[32rem] sm:h-[28rem]"
-            aria-live="polite"
-          >
-            <QuoteIcon className="w-12 h-12 text-gray-200 mb-4" />
-            <blockquote className="max-w-prose">
-              <p className="text-lg text-gray-600 italic">
-                &quot;{currentTestimonial.message}&quot;
-              </p>
-            </blockquote>
-            <figcaption className="mt-6 flex flex-col items-center">
-              <img
-                src={currentTestimonial.avatar}
-                alt={`${currentTestimonial.name} avatar`}
-                width={64}
-                height={64}
-                className="rounded-full shadow-md border-2 border-white"
-              />
-              <div className="mt-3">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {currentTestimonial.name}
-                </h3>
-                <p className="text-sm text-gray-500">
-                  {currentTestimonial.location}
-                </p>
-              </div>
-            </figcaption>
-          </figure>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 md:mb-20">
+          <h2 className="text-5xl md:text-6xl font-extrabold text-text-dark leading-tight">
+            Start Your <span className="text-[#b89658]">Chess Adventure</span>
+          </h2>
+          <p className="mt-4 text-xl text-text-medium font-medium">
+            Find the perfect path to begin your journey to becoming a champion.
+          </p>
         </div>
-        <button
-          onClick={handleNext}
-          aria-label="Next testimonial"
-          className="group order-3 flex-shrink-0 bg-white hover:bg-gray-100 text-gray-400 hover:text-gray-800 rounded-full p-3 transition-all duration-300 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-400"
-        >
-          <ArrowIcon
-            direction="right"
-            className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1"
-          />
-        </button>
+
+        <div className="max-w-5xl mx-auto flex flex-wrap md:flex-nowrap justify-center items-center gap-x-4 gap-y-8">
+          <button
+            onClick={handlePrev}
+            aria-label="Previous testimonial"
+            className="group order-2 md:order-1 flex-shrink-0 bg-gray-100 hover:bg-gray-200 text-text-dark hover:text-[#b89658] rounded-full p-3 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#b89658]"
+          >
+            <ArrowIcon className="w-6 h-6 transform rotate-180" />
+          </button>
+
+          <div className="relative w-full order-1 md:order-2 h-[30rem] sm:h-[26rem]">
+            <figure
+              key={currentIndex}
+              className="absolute inset-0 bg-gray-50 border border-gray-200 p-6 sm:p-8 rounded-2xl shadow-sm flex flex-col justify-center items-center text-center animate-fadeIn"
+              aria-live="polite"
+            >
+              <QuoteIcon className="absolute top-[-3rem] sm:top-[-3rem] w-[6rem] h-[6rem] text-gray-600" />
+
+              <div className="flex-grow w-full flex items-center justify-center">
+                <blockquote className="max-w-prose">
+                  <p className="text-base sm:text-lg text-gray-700 italic">
+                    &quot;{currentTestimonial.message}&quot;
+                  </p>
+                </blockquote>
+              </div>
+
+              <figcaption className="mt-6 flex flex-col items-center flex-shrink-0">
+                <img
+                  src={currentTestimonial.avatar}
+                  alt={`${currentTestimonial.name}'s avatar`}
+                  className="w-16 h-16 rounded-full shadow-md border-2 border-white object-cover"
+                />
+                <div className="mt-3">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {currentTestimonial.name}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {currentTestimonial.location}
+                  </p>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+
+          {/* Next Button - order-3 on both mobile and desktop */}
+          <button
+            onClick={handleNext}
+            aria-label="Next testimonial"
+            className="group order-3 flex-shrink-0 bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-[#b89658] rounded-full p-3 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#b89658]"
+          >
+            <ArrowIcon className="w-6 h-6" />
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default App;
+export default Testimonials;
