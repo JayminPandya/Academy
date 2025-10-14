@@ -1,10 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-
 import { IPricing } from "@/types";
 import React, { useState } from "react";
-
 import PricingModal from "./PricingModel";
 
 interface Props {
@@ -12,14 +10,12 @@ interface Props {
   highlight?: boolean;
 }
 
-const CheckCircleIcon = ({ className }: { className?: string }) => (
+const CheckIcon = ({ className }: { className?: string }) => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
-    width="20"
-    height="20"
   >
     <path
       fillRule="evenodd"
@@ -35,7 +31,7 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
 
   const handleWhatsAppRedirect = () => {
     const phoneNumber = "917016745669";
-    const message = `I want to join ${name} level coaching @ ₹${price}/-`;
+    const message = `I'm interested in the ${name} plan for ₹${price}/mo. Please provide more details.`;
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
@@ -46,43 +42,74 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
     <React.Fragment>
       <div
         className={clsx(
-          "w-full max-w-sm mx-auto bg-white rounded-xl border border-gray-200 lg:max-w-full",
-          { "shadow-lg": highlight }
+          "w-full max-w-sm mx-auto rounded-2xl border flex flex-col",
+          {
+            "bg-white shadow-lg border-gray-200": !highlight,
+            "bg-text-dark text-white shadow-2xl border-[#b89658] transform scale-105":
+              highlight,
+          }
         )}
       >
-        <div className="p-6 border-b border-gray-200 rounded-t-xl">
-          <h3 className="text-2xl font-semibold mb-4">{icon}</h3>
-          <p className="text-3xl md:text-5xl font-bold mb-6">
-            <span className={clsx({ "text-secondary": highlight })}>
+        <div className="p-8 text-center border-b">
+          <div
+            className={clsx("text-5xl mb-4 mx-auto w-fit", {
+              "text-[#b89658]": !highlight,
+              "text-white": highlight,
+            })}
+          >
+            {icon}
+          </div>
+          <h3 className="text-2xl font-bold">{name}</h3>
+          <p className="mt-4 text-4xl sm:text-5xl font-extrabold">
+            <span className={clsx({ "text-[#b89658]": highlight })}>
               {typeof price === "number" ? `₹${price}` : price}
             </span>
             {typeof price === "number" && (
-              <span className="text-lg font-normal text-gray-600">/mo</span>
+              <span
+                className={clsx("text-lg font-medium", {
+                  "text-gray-500": !highlight,
+                  "text-gray-300": highlight,
+                })}
+              >
+                /mo
+              </span>
             )}
           </p>
-          <button
-            onClick={() => setModalOpen(true)}
-            className={clsx("w-full py-3 px-4 rounded-full transition-colors", {
-              "text-white bg-primary hover:bg-primary-accent": highlight,
-              "bg-hero-background hover:bg-gray-200": !highlight,
+        </div>
+
+        <div className="p-8 flex-grow">
+          <p className="font-semibold mb-1">FEATURES</p>
+          <p
+            className={clsx("mb-6", {
+              "text-gray-600": !highlight,
+              "text-gray-400": highlight,
             })}
           >
-            Enroll Now
-          </button>
-        </div>
-        <div className="p-6 mt-1">
-          <p className="font-bold mb-0">FEATURES</p>
-          <p className="text-foreground-accent mb-5">
             Everything in basic, plus...
           </p>
-          <ul className="space-y-4 mb-8">
+          <ul className="space-y-4">
             {features.map((feature, index) => (
-              <li key={index} className="flex items-center">
-                <CheckCircleIcon className="h-5 w-5 text-secondary mr-2" />
-                <span className="text-foreground-accent">{feature}</span>
+              <li key={index} className="flex items-start">
+                <CheckIcon className="h-6 w-6 text-[#b89658] mr-3 flex-shrink-0" />
+                <span>{feature}</span>
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="p-8 pt-0 mt-auto">
+          <button
+            onClick={() => setModalOpen(true)}
+            className={clsx(
+              "w-full py-3 px-6 rounded-lg text-lg font-semibold transition-transform duration-300 hover:scale-105",
+              {
+                "bg-gray-100 text-[#b89658] hover:bg-gray-200": !highlight,
+                "bg-[#b89658] text-white hover:bg-[#a9884f]": highlight,
+              }
+            )}
+          >
+            Make Your First Move
+          </button>
         </div>
       </div>
 
@@ -98,5 +125,3 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
 };
 
 export default PricingColumn;
-
-
