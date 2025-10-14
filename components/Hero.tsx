@@ -1,44 +1,55 @@
-import React from 'react';
-import Image from 'next/image';
+"use client";
+import React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
-import JoinNowButton from './JoinNowButton';
+const heroDetails = {
+  heading: (
+    <>
+      Master the Game, Shape Your Mind: <br />
+      <span className="text-[#b89658]">Your Chess Journey Starts Here</span>
+    </>
+  ),
+  subheading:
+    "Join our world-class chess academy and unlock your strategic potential. We offer expert coaching for all ages, turning passion into championship-level skill.",
+  centerImageSrc: "/mate.png",
+};
 
-import { heroDetails } from '@/data/hero';
+const JoinNowButton = () => (
+  <a
+    href="#book-demo"
+    className="bg-[#b89658] text-white font-bold py-3 px-8 rounded-lg text-lg transition-transform duration-300 hover:bg-[#a9884f] shadow-lg"
+  >
+    Schdule Your Free Demo
+  </a>
+);
 
 const Hero: React.FC = () => {
-    return (
-        <section
-            id="hero"
-            className="relative flex items-center justify-center pb-0 pt-32 md:pt-40 px-5"
-        >
-            <div className="absolute left-0 top-0 bottom-0 -z-10 w-full">
-                <div className="absolute inset-0 h-full w-full bg-hero-background bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]">
-                </div>
-            </div>
+  return (
+    <section id="hero" className="bg-white mt-28 md:mt-36">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+        <div className="w-full lg:w-1/2 text-center lg:text-left">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-text-dark leading-tight">
+            {heroDetails.heading}
+          </h1>
+          <p className="mt-6 text-lg text-gray-600 max-w-xl mx-auto lg:mx-0">
+            {heroDetails.subheading}
+          </p>
+          <div className="mt-10">
+            <JoinNowButton />
+          </div>
+        </div>
 
-            <div className="absolute left-0 right-0 bottom-0 backdrop-blur-[2px] h-40 bg-gradient-to-b from-transparent via-[rgba(233,238,255,0.5)] to-[rgba(202,208,230,0.5)]">
-            </div>
-
-            <div className="text-center">
-                <h1 className="text-4xl md:text-6xl md:leading-tight font-bold text-foreground max-w-lg md:max-w-2xl mx-auto">{heroDetails.heading}</h1>
-                <p className="mt-4 text-foreground max-w-lg mx-auto">{heroDetails.subheading}</p>
-                <div className="mt-6 flex flex-col sm:flex-row items-center sm:gap-4 w-fit mx-auto">
-                    <JoinNowButton dark />
-                </div>
-                <Image
-                    src={heroDetails.centerImageSrc}
-                    width={700}
-                    height={300}
-                    quality={100}
-                    sizes="(max-width: 768px) 100vw, 384px"
-                    priority={true}
-                    unoptimized={true}
-                    alt="app mockup"
-                    className='relative mt-12 md:mt-16 mx-auto z-10'
-                />
-            </div>
-        </section>
-    );
+        <div className="w-full lg:w-1/2">
+          <img
+            src={heroDetails.centerImageSrc}
+            alt="Young chess players engaged in a match"
+            className="rounded-2xl shadow-2xl object-cover w-full h-auto"
+          />
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Hero;
