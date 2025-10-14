@@ -28,7 +28,7 @@ const achievementsData = [
 
 const AchievementsSection = () => {
   return (
-    <section className="bg-bg-light-teal py-16 sm:py-24 relative overflow-hidden">
+    <section className="bg-bg-light-teal py-16 sm:py-28 relative overflow-hidden">
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute top-1/4 left-[10%] w-10 h-10 bg-[url('/chess-pawn.svg')] bg-contain"></div>
         <div className="absolute bottom-1/3 right-[15%] w-12 h-12 bg-[url('/chess-knight.svg')] bg-contain"></div>
@@ -125,4 +125,5 @@ const AchievementsSection = () => {
 };
 
 export default AchievementsSection;
+
 
