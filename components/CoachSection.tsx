@@ -70,10 +70,10 @@ const CoachSection: React.FC = () => {
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
             <div className="lg:col-span-2 flex flex-col items-center text-center">
-              <div className="relative w-64 h-80 md:w-72 md:h-96 mb-6">
+              <div className="relative w-72 md:w-96 mb-6">
                 <div className="absolute inset-0 rounded-2xl bg-[#b89658] transform rotate-3"></div>
                 <img
-                  className="relative w-full h-full object-cover rounded-2xl shadow-lg border-4 border-white"
+                  className="relative w-full h-auto object-contain rounded-2xl shadow-lg border-4 border-white"
                   src="/Coach-Jaymin-2.jpeg"
                   alt="Coach Jaymin N. Pandya"
                 />
@@ -138,3 +138,4 @@ const CoachSection: React.FC = () => {
 };
 
 export default CoachSection;
+
