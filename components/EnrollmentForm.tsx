@@ -471,14 +471,16 @@ const EnrollmentForm: React.FC = () => {
                 Email ID
               </label>
               <div className="relative">
-                <FaRegEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                  <FaRegEnvelope className="w-5 h-5" />
+                </div>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="form-input pl-10"
+                  className="pl-10 pr-4 border border-[#D1D5DB] rounded-lg transition-all ease-in-out delay-[0.2s] w-full py-3"
                 />
               </div>
               {errors.email && <p className="error-text">{errors.email}</p>}
@@ -488,14 +490,16 @@ const EnrollmentForm: React.FC = () => {
                 Contact Number
               </label>
               <div className="relative">
-                <FaMobileAlt className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                  <FaMobileAlt className="w-5 h-5" />
+                </div>
                 <input
                   type="tel"
                   id="contact"
                   name="contact"
                   value={formData.contact}
                   onChange={handleChange}
-                  className="form-input pl-10"
+                  className="pl-10 pr-4 border border-[#D1D5DB] rounded-lg transition-all ease-in-out delay-[0.2s] w-full py-3"
                 />
               </div>
               {errors.contact && <p className="error-text">{errors.contact}</p>}
