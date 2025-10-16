@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import type { Attachment } from "nodemailer/lib/mailer";
 
-// This is the main handler for POST requests to /api/send-enrollment
 export async function POST(request: Request) {
   try {
-    // 0. VALIDATE SERVER-SIDE ENVIRONMENT VARIABLES
-    // Note: Server-side variables should NOT have the NEXT_PUBLIC_ prefix.
     if (
       !process.env.NEXT_PUBLIC_EMAIL_SERVER_USER ||
       !process.env.NEXT_PUBLIC_EMAIL_SERVER_PASSWORD ||
@@ -18,12 +16,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // 1. PARSE FORM DATA
     const formData = await request.formData();
 
-    // 2. CONFIGURE NODEMAILER
     const transporter = nodemailer.createTransport({
-      service: "gmail", // Or use host/port for other services
+      service: "gmail",
       auth: {
         user: process.env.NEXT_PUBLIC_EMAIL_SERVER_USER,
         pass: process.env.NEXT_PUBLIC_EMAIL_SERVER_PASSWORD,
@@ -38,7 +34,7 @@ export async function POST(request: Request) {
     ) as File | null;
     const fideIdImageFile = formData.get("fideIdImage") as File | null;
 
-    const attachments = [];
+    const attachments: Attachment[] = [];
 
     // Helper function to process and add files to the attachments array
     const addAttachment = async (file: File | null) => {
