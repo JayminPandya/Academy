@@ -1,7 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegEnvelope, FaMobileAlt } from "react-icons/fa";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import {
+  CountrySelect,
+  StateSelect,
+  CitySelect,
+} from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 
 // --- Form Section Component for Accordion ---
 interface FormSectionProps {
@@ -62,9 +68,9 @@ const EnrollmentForm: React.FC = () => {
     email: "",
     contact: "",
     prevCoach: "",
-    city: "",
-    state: "",
     country: "",
+    state: "",
+    city: "",
     hasInternet: "",
     familiarWithPlatforms: "",
     hasFederationId: "",
@@ -73,8 +79,10 @@ const EnrollmentForm: React.FC = () => {
     hasFideId: "",
     fideIdNumber: "",
     fideIdImage: null as File | null,
-    preferredTiming: "",
-    goals: [] as string[],
+    preferredDays: "",
+    preferredTimeFrom: "",
+    preferredTimeTo: "",
+    goals: "",
     agreedToTerms: false,
     signature: "",
     date: "",
@@ -83,10 +91,14 @@ const EnrollmentForm: React.FC = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const [countryId, setCountryId] = useState(0);
+  const [stateId, setStateId] = useState(0);
+
   const resetForm = () => {
     setFormData(initialFormState);
     setErrors({});
-    // We keep the success message visible for the user
+    setCountryId(0);
+    setStateId(0);
   };
 
   const handleToggle = (section: string) => {
@@ -94,22 +106,15 @@ const EnrollmentForm: React.FC = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value, type } = e.target;
 
     if (type === "checkbox") {
       const { checked } = e.target as HTMLInputElement;
-      if (name === "goals") {
-        setFormData((prev) => ({
-          ...prev,
-          goals: checked
-            ? [...prev.goals, value]
-            : prev.goals.filter((goal) => goal !== value),
-        }));
-      } else {
-        setFormData((prev) => ({ ...prev, [name]: checked }));
-      }
+      setFormData((prev) => ({ ...prev, [name]: checked }));
     } else if (type === "file") {
       const { files } = e.target as HTMLInputElement;
       setFormData((prev) => ({ ...prev, [name]: files ? files[0] : null }));
@@ -120,16 +125,15 @@ const EnrollmentForm: React.FC = () => {
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    // Student Info
+    // ... (All other validations remain the same)
     if (!formData.studentName.trim())
       newErrors.studentName = "Student name is required.";
-    if (!formData.schoolId) newErrors.schoolId = "School ID card is required.";
+    if (!formData.schoolId)
+      newErrors.schoolId = "School ID card or Birth Certificate is required.";
     if (!formData.aadhaarCard)
       newErrors.aadhaarCard = "Aadhaar card is required.";
     if (!formData.chessLevel)
       newErrors.chessLevel = "Please select a chess level.";
-
-    // Parent Info
     if (!formData.parentName.trim())
       newErrors.parentName = "Parent name is required.";
     if (!formData.parentOccupation)
@@ -152,12 +156,11 @@ const EnrollmentForm: React.FC = () => {
       newErrors.contact = "Contact number must be at least 10 digits.";
     }
 
-    // Location
-    if (!formData.city.trim()) newErrors.city = "City is required.";
-    if (!formData.state.trim()) newErrors.state = "State is required.";
-    if (!formData.country.trim()) newErrors.country = "Country is required.";
+    // Updated Location Validation
+    if (!formData.country) newErrors.country = "Country is required.";
+    if (!formData.state) newErrors.state = "State is required.";
+    if (!formData.city) newErrors.city = "City is required.";
 
-    // Online Readiness & IDs
     if (!formData.hasInternet)
       newErrors.hasInternet = "This field is required.";
     if (!formData.familiarWithPlatforms)
@@ -173,14 +176,16 @@ const EnrollmentForm: React.FC = () => {
       newErrors.fideIdNumber = "FIDE / AICF ID is required.";
     if (formData.hasFideId === "yes" && !formData.fideIdImage)
       newErrors.fideIdImage = "FIDE / AICF ID image is required.";
-    if (!formData.preferredTiming.trim())
-      newErrors.preferredTiming = "Preferred timing is required.";
 
-    // Goals
-    if (formData.goals.length === 0)
-      newErrors.goals = "Please select at least one goal.";
+    if (!formData.preferredDays.trim())
+      newErrors.preferredDays = "Preferred days are required.";
+    if (!formData.preferredTimeFrom)
+      newErrors.preferredTimeFrom = "Start time is required.";
+    if (!formData.preferredTimeTo)
+      newErrors.preferredTimeTo = "End time is required.";
 
-    // Terms & Consent
+    if (!formData.goals) newErrors.goals = "Please select a goal.";
+
     if (!formData.signature.trim())
       newErrors.signature = "Signature is required.";
     if (!formData.date) newErrors.date = "Date is required.";
@@ -249,8 +254,9 @@ const EnrollmentForm: React.FC = () => {
       <style>
         {`
           .form-label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; }
-          .form-input { width: 100%; padding: 0.75rem 1rem; border: 1px solid #D1D5DB; border-radius: 0.5rem; transition: all 0.2s ease-in-out; }
-          .form-input:focus { outline: none; border-color: #b89658; box-shadow: 0 0 0 2px rgba(184, 150, 88, 0.3); }
+          .form-input, .form-select { width: 100%; padding: 0.75rem 1rem; border: 1px solid #D1D5DB; border-radius: 0.5rem; transition: all 0.2s ease-in-out; background-color: white; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
+          .form-input:focus, .form-select:focus { outline: none; border-color: #b89658; box-shadow: 0 0 0 2px rgba(184, 150, 88, 0.3); }
+          .form-select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-right: 2.5rem; }
           .form-input-file { width: 100%; font-size: 0.875rem; color: #4B5563; }
           .form-input-file::file-selector-button { margin-right: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 0; font-weight: 600; background-color: #fef3c7; color: #b89658; cursor: pointer; transition: background-color 0.2s; }
           .form-input-file::file-selector-button:hover { background-color: #fde68a; }
@@ -294,7 +300,7 @@ const EnrollmentForm: React.FC = () => {
             </div>
             <div>
               <label htmlFor="schoolId" className="form-label">
-                Upload School ID Card
+                Upload School ID Card / Birth Certificate
               </label>
               <input
                 type="file"
@@ -504,11 +510,60 @@ const EnrollmentForm: React.FC = () => {
               </div>
               {errors.contact && <p className="error-text">{errors.contact}</p>}
             </div>
+            <div>
+              <label htmlFor="country" className="form-label">
+                Country
+              </label>
+              <CountrySelect
+                onChange={(e: any) => {
+                  setCountryId(e.id);
+                  setFormData((prev) => ({
+                    ...prev,
+                    country: e.name,
+                    state: "",
+                    city: "",
+                  }));
+                }}
+                placeHolder="Select Country"
+                className="form-select"
+              />
+              {errors.country && <p className="error-text">{errors.country}</p>}
+            </div>
+            <div>
+              <label htmlFor="state" className="form-label">
+                State
+              </label>
+              <StateSelect
+                countryid={countryId}
+                onChange={(e: any) => {
+                  setStateId(e.id);
+                  setFormData((prev) => ({ ...prev, state: e.name, city: "" }));
+                }}
+                placeHolder="Select State"
+                className="form-select"
+              />
+              {errors.state && <p className="error-text">{errors.state}</p>}
+            </div>
+            <div className="md:col-span-2">
+              <label htmlFor="city" className="form-label">
+                City
+              </label>
+              <CitySelect
+                countryid={countryId}
+                stateid={stateId}
+                onChange={(e: any) => {
+                  setFormData((prev) => ({ ...prev, city: e.name }));
+                }}
+                placeHolder="Select City"
+                className="form-select"
+              />
+              {errors.city && <p className="error-text">{errors.city}</p>}
+            </div>
           </FormSection>
 
           {/* --- Previous Coaching & Location --- */}
           <FormSection
-            title="♟️ Previous Coaching & Location"
+            title="♟️ Previous Previous Academy or Coach"
             isOpen={openSection === "coachingLocation"}
             onToggle={() => handleToggle("coachingLocation")}
           >
@@ -524,48 +579,6 @@ const EnrollmentForm: React.FC = () => {
                 onChange={handleChange}
                 className="form-input"
               />
-            </div>
-            <div>
-              <label htmlFor="city" className="form-label">
-                City
-              </label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                className="form-input"
-              />
-              {errors.city && <p className="error-text">{errors.city}</p>}
-            </div>
-            <div>
-              <label htmlFor="state" className="form-label">
-                State
-              </label>
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                className="form-input"
-              />
-              {errors.state && <p className="error-text">{errors.state}</p>}
-            </div>
-            <div className="md:col-span-2">
-              <label htmlFor="country" className="form-label">
-                Country
-              </label>
-              <input
-                type="text"
-                id="country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="form-input"
-              />
-              {errors.country && <p className="error-text">{errors.country}</p>}
             </div>
           </FormSection>
 
@@ -641,76 +654,7 @@ const EnrollmentForm: React.FC = () => {
             </div>
             <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 items-start">
               <div>
-                <label className="form-label">
-                  Have a Chess Federation ID?
-                </label>
-                <div className="flex gap-x-6 mt-2">
-                  <label className="form-radio-label">
-                    <input
-                      type="radio"
-                      name="hasFederationId"
-                      value="yes"
-                      checked={formData.hasFederationId === "yes"}
-                      onChange={handleChange}
-                      className="form-radio"
-                    />{" "}
-                    Yes
-                  </label>
-                  <label className="form-radio-label">
-                    <input
-                      type="radio"
-                      name="hasFederationId"
-                      value="no"
-                      checked={formData.hasFederationId === "no"}
-                      onChange={handleChange}
-                      className="form-radio"
-                    />{" "}
-                    No
-                  </label>
-                </div>
-                {errors.hasFederationId && (
-                  <p className="error-text">{errors.hasFederationId}</p>
-                )}
-              </div>
-              {formData.hasFederationId === "yes" && (
-                <div className="grid grid-cols-1 gap-y-4">
-                  <div>
-                    <label htmlFor="federationId" className="form-label">
-                      Federation ID
-                    </label>
-                    <input
-                      type="text"
-                      id="federationId"
-                      name="federationId"
-                      value={formData.federationId}
-                      onChange={handleChange}
-                      className="form-input"
-                    />
-                    {errors.federationId && (
-                      <p className="error-text">{errors.federationId}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label htmlFor="federationIdImage" className="form-label">
-                      Upload Federation ID
-                    </label>
-                    <input
-                      type="file"
-                      id="federationIdImage"
-                      name="federationIdImage"
-                      onChange={handleChange}
-                      className="form-input-file"
-                    />
-                    {errors.federationIdImage && (
-                      <p className="error-text">{errors.federationIdImage}</p>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 items-start">
-              <div>
-                <label className="form-label">Have a FIDE ID or AICF ID?</label>
+                <label className="form-label">Have a AICF ID?</label>
                 <div className="flex gap-x-6 mt-2">
                   <label className="form-radio-label">
                     <input
@@ -743,7 +687,7 @@ const EnrollmentForm: React.FC = () => {
                 <div className="grid grid-cols-1 gap-y-4">
                   <div>
                     <label htmlFor="fideIdNumber" className="form-label">
-                      FIDE / AICF ID
+                      AICF ID
                     </label>
                     <input
                       type="text"
@@ -759,7 +703,7 @@ const EnrollmentForm: React.FC = () => {
                   </div>
                   <div>
                     <label htmlFor="fideIdImage" className="form-label">
-                      Upload FIDE / AICF ID
+                      Upload AICF ID
                     </label>
                     <input
                       type="file"
@@ -775,81 +719,199 @@ const EnrollmentForm: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="md:col-span-2">
-              <label htmlFor="preferredTiming" className="form-label">
-                Preferred Session Timings
-              </label>
-              <input
-                type="text"
-                id="preferredTiming"
-                name="preferredTiming"
-                value={formData.preferredTiming}
-                onChange={handleChange}
-                className="form-input"
-                placeholder="e.g., Weekends, 4 PM - 6 PM IST"
-              />
-              {errors.preferredTiming && (
-                <p className="error-text">{errors.preferredTiming}</p>
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 items-start">
+              <div>
+                <label className="form-label">Have a FIDE ID?</label>
+                <div className="flex gap-x-6 mt-2">
+                  <label className="form-radio-label">
+                    <input
+                      type="radio"
+                      name="hasFederationId"
+                      value="yes"
+                      checked={formData.hasFederationId === "yes"}
+                      onChange={handleChange}
+                      className="form-radio"
+                    />{" "}
+                    Yes
+                  </label>
+                  <label className="form-radio-label">
+                    <input
+                      type="radio"
+                      name="hasFederationId"
+                      value="no"
+                      checked={formData.hasFederationId === "no"}
+                      onChange={handleChange}
+                      className="form-radio"
+                    />{" "}
+                    No
+                  </label>
+                </div>
+                {errors.hasFederationId && (
+                  <p className="error-text">{errors.hasFederationId}</p>
+                )}
+              </div>
+              {formData.hasFederationId === "yes" && (
+                <div className="grid grid-cols-1 gap-y-4">
+                  <div>
+                    <label htmlFor="federationId" className="form-label">
+                      FIDE ID
+                    </label>
+                    <input
+                      type="text"
+                      id="federationId"
+                      name="federationId"
+                      value={formData.federationId}
+                      onChange={handleChange}
+                      className="form-input"
+                    />
+                    {errors.federationId && (
+                      <p className="error-text">{errors.federationId}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label htmlFor="federationIdImage" className="form-label">
+                      Upload FIDE ID
+                    </label>
+                    <input
+                      type="file"
+                      id="federationIdImage"
+                      name="federationIdImage"
+                      onChange={handleChange}
+                      className="form-input-file"
+                    />
+                    {errors.federationIdImage && (
+                      <p className="error-text">{errors.federationIdImage}</p>
+                    )}
+                  </div>
+                </div>
               )}
+            </div>
+            <div className="md:col-span-2">
+              <label className="form-label">Preferred Session Timings</label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
+                <div>
+                  <label
+                    htmlFor="preferredDays"
+                    className="text-sm font-medium text-gray-600"
+                  >
+                    Days
+                  </label>
+                  <input
+                    type="text"
+                    id="preferredDays"
+                    name="preferredDays"
+                    value={formData.preferredDays}
+                    onChange={handleChange}
+                    className="form-input mt-1"
+                    placeholder="e.g., Mon - Fri"
+                  />
+                  {errors.preferredDays && (
+                    <p className="error-text">{errors.preferredDays}</p>
+                  )}
+                </div>
+                <div>
+                  <label
+                    htmlFor="preferredTimeFrom"
+                    className="text-sm font-medium text-gray-600"
+                  >
+                    From
+                  </label>
+                  <input
+                    type="time"
+                    id="preferredTimeFrom"
+                    name="preferredTimeFrom"
+                    value={formData.preferredTimeFrom}
+                    onChange={handleChange}
+                    className="form-input mt-1"
+                  />
+                  {errors.preferredTimeFrom && (
+                    <p className="error-text">{errors.preferredTimeFrom}</p>
+                  )}
+                </div>
+                <div>
+                  <label
+                    htmlFor="preferredTimeTo"
+                    className="text-sm font-medium text-gray-600"
+                  >
+                    To
+                  </label>
+                  <input
+                    type="time"
+                    id="preferredTimeTo"
+                    name="preferredTimeTo"
+                    value={formData.preferredTimeTo}
+                    onChange={handleChange}
+                    className="form-input mt-1"
+                  />
+                  {errors.preferredTimeTo && (
+                    <p className="error-text">{errors.preferredTimeTo}</p>
+                  )}
+                </div>
+              </div>
             </div>
           </FormSection>
 
-          {/* --- Chess Goals --- */}
+          {/* --- Chess Goals section --- */}
           <FormSection
             title="🎯 Chess Goals"
             isOpen={openSection === "goals"}
             onToggle={() => handleToggle("goals")}
           >
             <div className="md:col-span-2">
-              <label className="form-label">Select one or more goals</label>
+              <label className="form-label">Select your primary goal</label>
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <label className="form-checkbox-label">
+                <label className="form-radio-label">
                   <input
-                    type="checkbox"
+                    type="radio"
                     name="goals"
                     value="School Top 5"
+                    checked={formData.goals === "School Top 5"}
                     onChange={handleChange}
-                    className="form-checkbox"
+                    className="form-radio"
                   />{" "}
                   School Top 5
                 </label>
-                <label className="form-checkbox-label">
+                <label className="form-radio-label">
                   <input
-                    type="checkbox"
+                    type="radio"
                     name="goals"
                     value="Zone / Taluka Top 5"
+                    checked={formData.goals === "Zone / Taluka Top 5"}
                     onChange={handleChange}
-                    className="form-checkbox"
+                    className="form-radio"
                   />{" "}
                   Zone / Taluka Top 5
                 </label>
-                <label className="form-checkbox-label">
+                <label className="form-radio-label">
                   <input
-                    type="checkbox"
+                    type="radio"
                     name="goals"
                     value="District Top 5"
+                    checked={formData.goals === "District Top 5"}
                     onChange={handleChange}
-                    className="form-checkbox"
+                    className="form-radio"
                   />{" "}
                   District Top 5
                 </label>
-                <label className="form-checkbox-label">
+                <label className="form-radio-label">
                   <input
-                    type="checkbox"
+                    type="radio"
                     name="goals"
                     value="State Top 5"
+                    checked={formData.goals === "State Top 5"}
                     onChange={handleChange}
-                    className="form-checkbox"
+                    className="form-radio"
                   />{" "}
                   State Top 5
                 </label>
-                <label className="form-checkbox-label">
+                <label className="form-radio-label">
                   <input
-                    type="checkbox"
+                    type="radio"
                     name="goals"
                     value="FIDE Rated Player"
+                    checked={formData.goals === "FIDE Rated Player"}
                     onChange={handleChange}
-                    className="form-checkbox"
+                    className="form-radio"
                   />{" "}
                   FIDE Rated Player
                 </label>
