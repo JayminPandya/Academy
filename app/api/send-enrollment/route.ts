@@ -98,6 +98,12 @@ export async function POST(request: Request) {
       fields.country
     }</li>
         </ul>
+        <h3>Previous Academy or Coach</h3>
+        <ul>
+        <li><strong>Name of Academy or Coach:</strong>${
+          fields.prevCoach || "NA"
+        }</li>
+        </ul>
         <h3>Online Readiness & IDs</h3>
          <ul>
           <li><strong>Has Internet:</strong> ${fields.hasInternet}</li>
@@ -110,9 +116,10 @@ export async function POST(request: Request) {
           <li><strong>Has FIDE/AICF ID:</strong> ${fields.hasFideId} (${
       fields.fideIdNumber || "N/A"
     })</li>
-           <li><strong>Preferred Timings:</strong> ${
-             fields.preferredTiming
-           }</li>
+           <li><strong>Preferred Days:</strong> ${fields.preferredDays}</li>
+           <li><strong>Preferred Time:</strong> From ${
+             fields.preferredTimeFrom
+           } To ${fields.preferredTimeTo}</li>
         </ul>
         <h3>Chess Goals</h3>
         <p>${fields.goals}</p>
@@ -153,3 +160,4 @@ export async function POST(request: Request) {
     );
   }
 }
+
