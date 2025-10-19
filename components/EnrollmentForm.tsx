@@ -2,14 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { FaRegEnvelope, FaMobileAlt } from "react-icons/fa";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-import {
-  CountrySelect,
-  StateSelect,
-  CitySelect,
-} from "react-country-state-city";
+import { GetCountries, GetState, GetCity } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 
-// --- Form Section Component for Accordion ---
 interface FormSectionProps {
   title: string;
   children: React.ReactNode;
@@ -91,18 +86,64 @@ const EnrollmentForm: React.FC = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const [countryId, setCountryId] = useState(0);
-  const [stateId, setStateId] = useState(0);
+  // 2. State for managing location data from the library
+  const [countriesList, setCountriesList] = useState<any[]>([]);
+  const [statesList, setStatesList] = useState<any[]>([]);
+  const [citiesList, setCitiesList] = useState<any[]>([]);
+
+  // State to hold the ID of the selected country/state for fetching dependent data
+  const [selectedCountryId, setSelectedCountryId] = useState<number | null>(
+    null
+  );
+  const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
+
+  useEffect(() => {
+    GetCountries().then((result) => {
+      setCountriesList(result);
+    });
+  }, []);
 
   const resetForm = () => {
     setFormData(initialFormState);
     setErrors({});
-    setCountryId(0);
-    setStateId(0);
+    setSelectedCountryId(null);
+    setSelectedStateId(null);
+    setStatesList([]);
+    setCitiesList([]);
   };
 
   const handleToggle = (section: string) => {
     setOpenSection(openSection === section ? "" : section);
+  };
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    const selectedName = selectedOption.getAttribute("data-name") || "";
+
+    if (name === "country") {
+      const countryId = parseInt(value);
+      setSelectedCountryId(countryId);
+      setSelectedStateId(null); // Reset state
+      GetState(countryId).then((result) => setStatesList(result));
+      setCitiesList([]);
+      setFormData((prev) => ({
+        ...prev,
+        country: selectedName,
+        state: "",
+        city: "",
+      }));
+    } else if (name === "state") {
+      if (!selectedCountryId) return;
+      const stateId = parseInt(value);
+      setSelectedStateId(stateId);
+      GetCity(selectedCountryId, stateId).then((result) =>
+        setCitiesList(result)
+      );
+      setFormData((prev) => ({ ...prev, state: selectedName, city: "" }));
+    } else if (name === "city") {
+      setFormData((prev) => ({ ...prev, city: selectedName }));
+    }
   };
 
   const handleChange = (
@@ -110,8 +151,14 @@ const EnrollmentForm: React.FC = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value, type } = e.target;
+    const { name } = e.target;
 
+    if (name === "country" || name === "state" || name === "city") {
+      handleLocationChange(e as React.ChangeEvent<HTMLSelectElement>);
+      return;
+    }
+
+    const { value, type } = e.target;
     if (type === "checkbox") {
       const { checked } = e.target as HTMLInputElement;
       setFormData((prev) => ({ ...prev, [name]: checked }));
@@ -121,6 +168,16 @@ const EnrollmentForm: React.FC = () => {
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const getFileHash = async (file: File): Promise<string> => {
+    const buffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+    return hashHex;
   };
 
   const validateForm = () => {
@@ -198,6 +255,33 @@ const EnrollmentForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // --- Duplicate File Check on Submit ---
+    const filesToUpload = [
+      formData.schoolId,
+      formData.aadhaarCard,
+      formData.federationIdImage,
+      formData.fideIdImage,
+    ].filter((file): file is File => file !== null);
+
+    if (filesToUpload.length > 1) {
+      const fileHashes = await Promise.all(
+        filesToUpload.map((file) => getFileHash(file))
+      );
+      const uniqueHashes = new Set(fileHashes);
+      if (uniqueHashes.size < fileHashes.length) {
+        alert(
+          "Duplicate images detected. Please upload a unique image for each required document."
+        );
+        setStatus({
+          loading: false,
+          error: "Duplicate images are not allowed.",
+          success: "",
+        });
+        return;
+      }
+    }
+
     if (!validateForm()) {
       alert("Please fill out all required fields correctly.");
       return;
@@ -213,12 +297,9 @@ const EnrollmentForm: React.FC = () => {
       "fideIdImage",
     ];
 
-    // Append all fields to FormData
     Object.entries(formData).forEach(([key, value]) => {
       if (fileKeys.includes(key)) {
         if (value) data.append(key, value as File);
-      } else if (Array.isArray(value)) {
-        data.append(key, value.join(", "));
       } else {
         data.append(key, String(value));
       }
@@ -229,13 +310,9 @@ const EnrollmentForm: React.FC = () => {
         method: "POST",
         body: data,
       });
-
       const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(
-          result.message || "Something went wrong sending the email."
-        );
+        throw new Error("Something went wrong, Try Again...");
       }
 
       setStatus({
@@ -514,49 +591,70 @@ const EnrollmentForm: React.FC = () => {
               <label htmlFor="country" className="form-label">
                 Country
               </label>
-              <CountrySelect
-                onChange={(e: any) => {
-                  setCountryId(e.id);
-                  setFormData((prev) => ({
-                    ...prev,
-                    country: e.name,
-                    state: "",
-                    city: "",
-                  }));
-                }}
-                placeHolder="Select Country"
+              <select
+                id="country"
+                name="country"
+                onChange={handleChange}
                 className="form-select"
-              />
+                value={selectedCountryId || ""}
+              >
+                <option value="">Select Country</option>
+                {countriesList.map((country: any) => (
+                  <option
+                    key={country.id}
+                    value={country.id}
+                    data-name={country.name}
+                  >
+                    {country.name}
+                  </option>
+                ))}
+              </select>
               {errors.country && <p className="error-text">{errors.country}</p>}
             </div>
             <div>
               <label htmlFor="state" className="form-label">
                 State
               </label>
-              <StateSelect
-                countryid={countryId}
-                onChange={(e: any) => {
-                  setStateId(e.id);
-                  setFormData((prev) => ({ ...prev, state: e.name, city: "" }));
-                }}
-                placeHolder="Select State"
+              <select
+                id="state"
+                name="state"
+                onChange={handleChange}
                 className="form-select"
-              />
+                disabled={!selectedCountryId}
+                value={selectedStateId || ""}
+              >
+                <option value="">Select State</option>
+                {statesList.map((state: any) => (
+                  <option
+                    key={state.id}
+                    value={state.id}
+                    data-name={state.name}
+                  >
+                    {state.name}
+                  </option>
+                ))}
+              </select>
               {errors.state && <p className="error-text">{errors.state}</p>}
             </div>
             <div className="md:col-span-2">
               <label htmlFor="city" className="form-label">
                 City
               </label>
-              <CitySelect
-                countryid={countryId}
-                stateid={stateId}
-                onChange={(e: any) => {
-                  setFormData((prev) => ({ ...prev, city: e.name }));
-                }}
-                placeHolder="Select City"
+              <select
+                id="city"
+                name="city"
+                onChange={handleChange}
                 className="form-select"
-              />
+                disabled={!selectedStateId}
+                value={formData.city}
+              >
+                <option value="">Select City</option>
+                {citiesList.map((city: any) => (
+                  <option key={city.id} value={city.name} data-name={city.name}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
               {errors.city && <p className="error-text">{errors.city}</p>}
             </div>
           </FormSection>
