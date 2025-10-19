@@ -661,7 +661,7 @@ const EnrollmentForm: React.FC = () => {
 
           {/* --- Previous Coaching & Location --- */}
           <FormSection
-            title="♟️ Previous Previous Academy or Coach"
+            title="♟️ Previous Academy or Coach"
             isOpen={openSection === "coachingLocation"}
             onToggle={() => handleToggle("coachingLocation")}
           >
@@ -1135,3 +1135,4 @@ const EnrollmentForm: React.FC = () => {
 };
 
 export default EnrollmentForm;
+
